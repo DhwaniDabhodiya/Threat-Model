@@ -1,0 +1,26 @@
+{
+  "version": "2.5.0",
+  "summary": {
+    "title": "New Threat Model",
+    "owner": "New",
+    "description": "High-Level System Description\n\nThis architecture represents a multi-tenant cloud application environment deployed on Microsoft Azure with Cloudflare integration for security, traffic routing, and authentication. The system handles three main types of traffic: Client User Traffic, Steris Admin User Traffic, and Client Equipment Traffic.\n\n1. Client User Traffic Flow\n\nClient Users access the environment through Cloudflare DNS/WAF, which provides initial protection against web-based threats and DDoS attacks.\n\nThe traffic is authenticated via mTLS (Mutual TLS) to ensure only authorized client endpoints can connect.\n\nAfter authentication, requests are routed to the Azure Custom Domain endpoint (client.environment.shc-ed.com).\n\nThe domain points to Azure Container Apps, hosting the CAT Services, which include:\n\nCATAPI – Core API for client interactions and data exchange.\n\nCATViewer – Web interface for viewing client data.\n\nCATExport – Service responsible for data export and reporting.\n\nCATSYNC – Synchronization service managing communication with MongoDB for persistent data storage.\n\n2. Steris Admin User Traffic Flow\n\nSteris Admin Users connect through Cloudflare DNS/WAF for secured and filtered access.\n\nAdmin access is authenticated using Cloudflare ZeroTrust Authentication.\n\nOnce authenticated, secure connectivity to Azure resources is established via a Cloudflare Tunnel.\n\nAdmin operations include managing configurations, monitoring services, and overseeing the monitoring pipeline components.\n\n3. Monitoring Pipeline Flow\n\nSystem telemetry and operational events are sent to Event Hubs.\n\nVector Processing handles data ingestion and transformation before metrics are sent to Prometheus Metrics.\n\nMetrics and logs are stored in VictoriaLogs and VictoriaMetrics for persistence.\n\nThe cloudflared agent also contributes monitoring data.\n\nGrafana Dashboards visualize logs, metrics, and system performance for administrators.\n\n4. Client Equipment Traffic Flow\n\nClient Equipment communicates with the platform via an optional Cloudflare Spectrum TCP WAF, which protects against malicious network traffic.\n\nThe equipment interacts primarily with the CATSYNC service through secured channels for data synchronization and telemetry uploads.\n\n5. Core Components Summary\n\nCloudflare DNS/WAF – Web Application Firewall, DNS routing, and DDoS protection.\n\nCloudflare ZeroTrust & mTLS – Authentication and secure channel enforcement.\n\nAzure Container Apps – Host core microservices (CATAPI, CATViewer, CATExport, CATSYNC).\n\nMongoDB – Backend data storage.\n\nEvent Hubs, Vector, Prometheus, VictoriaLogs/Metrics – Telemetry and monitoring infrastructure.\n\nGrafana – Visualization for operational insights.\n\nData Flow Summary\n\nInbound: Client and admin requests routed via Cloudflare → Azure Container Apps.\n\nInternal: Application services exchange data → MongoDB and monitoring components.\n\nOutbound: Monitoring metrics → Grafana dashboards for visibility.",
+    "id": 0
+  },
+  "detail": {
+    "contributors": [],
+    "diagrams": [
+      {
+        "id": 0,
+        "title": "New generic diagram",
+        "diagramType": "Generic",
+        "placeholder": "New generic diagram description",
+        "thumbnail": "./public/content/images/thumbnail.jpg",
+        "version": "2.5.0",
+        "cells": []
+      }
+    ],
+    "diagramTop": 1,
+    "reviewer": "",
+    "threatTop": 0
+  }
+}
